@@ -1,9 +1,10 @@
+services:
   connector-redflag-domains:
     image: opencti/connector-red-flag-domains:6.2.18
     environment:
-      - OPENCTI_URL=http://opencti:8080
-      - OPENCTI_TOKEN=OPEN_CTI_TOKEN
-      - CONNECTOR_ID=CONNECTOR_ID
+      - OPENCTI_URL=${OPENCTI_BASE_URL}
+      - OPENCTI_TOKEN=${CONNECTOR_REDFLAGDOMAINS_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_REDFLAGDOMAINS_ID}
       - "CONNECTOR_NAME=Red Flag Domains"
       - CONNECTOR_SCOPE=red-flag-domains
       - CONNECTOR_CONFIDENCE_LEVEL=70
@@ -11,4 +12,10 @@
       - CONNECTOR_LOG_LEVEL=info
       - REDFLAGDOMAINS_URL=https://dl.red.flag.domains/daily/
     restart: always
-
+    networks:
+      - opencti_connector-net
+    
+networks:
+   opencti_connector-net:
+     name: opencti-docker_opencti-net
+     external: true

@@ -3,12 +3,19 @@ services:
   connector-abuse-ssl:
     image: opencti/connector-abuse-ssl:6.2.18
     environment:
-      - OPENCTI_URL=http://opencti:8080
-      - OPENCTI_TOKEN=CHANGEME
-      - CONNECTOR_ID=CHANGEME_UUID4
-      - "CONNECTOR_NAME=Abuse.ch SSL Blacklist"
+      - OPENCTI_URL=${OPENCTI_BASE_URL}
+      - OPENCTI_TOKEN=${CONNECTOR_ABUSESSL_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_ABUSESSL_ID}
+      - "CONNECTOR_NAME=Abuse.ch SSL Blocklist"
       - CONNECTOR_SCOPE=abusessl
       - CONNECTOR_LOG_LEVEL=error
       - ABUSESSL_URL=https://sslbl.abuse.ch/blacklist/sslipblacklist.csv
       - ABUSESSL_INTERVAL=360 # Time to wait in minutes between subsequent requests
     restart: always
+    networks:
+      - opencti_connector-net
+    
+networks:
+   opencti_connector-net:
+     name: opencti-docker_opencti-net
+     external: true

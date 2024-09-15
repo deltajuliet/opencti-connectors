@@ -3,19 +3,19 @@ services:
   connector-alienvault:
     image: opencti/connector-alienvault:6.2.18
     environment:
-      - OPENCTI_URL=http://opencti:8080
-      - OPENCTI_TOKEN=ChangeMe
-      - CONNECTOR_ID=ChangeMe
+      - OPENCTI_URL=${OPENCTI_BASE_URL}
+      - OPENCTI_TOKEN=${CONNECTOR_ALIENTVAULT_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_ALIENTVAULT_ID}
       - CONNECTOR_NAME=AlienVault
       - CONNECTOR_SCOPE=alienvault
       - CONNECTOR_LOG_LEVEL=error
       - CONNECTOR_DURATION_PERIOD=PT30M # In ISO8601 Format starting with "P" for Period ex: "PT30M" = Period time of 30 minutes
       - ALIENVAULT_BASE_URL=https://otx.alienvault.com
-      - ALIENVAULT_API_KEY=ChangeMe
+      - ALIENVAULT_API_KEY=${CONNECTOR_ALIENTVAULT_API_KEY}
       - ALIENVAULT_TLP=White
       - ALIENVAULT_CREATE_OBSERVABLES=true
       - ALIENVAULT_CREATE_INDICATORS=true
-      - ALIENVAULT_PULSE_START_TIMESTAMP=2022-05-01T00:00:00                  # BEWARE! Could be a lot of pulses!
+      - ALIENVAULT_PULSE_START_TIMESTAMP=2023-09-01T00:00:00                  # BEWARE! Could be a lot of pulses!
       - ALIENVAULT_REPORT_TYPE=threat-report
       - ALIENVAULT_REPORT_STATUS=New
       - ALIENVAULT_GUESS_MALWARE=false                                        # Use tags to guess malware.
@@ -24,3 +24,10 @@ services:
       - ALIENVAULT_ENABLE_RELATIONSHIPS=true                                  # Enable/Disable relationship creation between SDOs.
       - ALIENVAULT_ENABLE_ATTACK_PATTERNS_INDICATES=false                     # Enable/Disable "indicates" relationships between indicators and attack patterns
     restart: always
+    networks:
+      - opencti_connector-net
+    
+networks:
+   opencti_connector-net:
+     name: opencti-docker_opencti-net
+     external: true

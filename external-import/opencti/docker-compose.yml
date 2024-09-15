@@ -3,9 +3,9 @@ services:
   connector-opencti:
     image: opencti/connector-opencti:6.2.18
     environment:
-      - OPENCTI_URL=http://localhost
-      - OPENCTI_TOKEN=ChangeMe
-      - CONNECTOR_ID=ChangeMe
+      - OPENCTI_URL=${OPENCTI_BASE_URL}
+      - OPENCTI_TOKEN=${CONNECTOR_OPENCTI_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_OPENCTI_ID}
       - "CONNECTOR_NAME=OpenCTI Datasets"
       - CONNECTOR_SCOPE=marking-definition,identity,location
       - CONNECTOR_CONFIDENCE_LEVEL=100
@@ -18,3 +18,10 @@ services:
       - CONFIG_REMOVE_CREATOR=false
       - CONFIG_INTERVAL=7 # In days
     restart: always
+    networks:
+      - opencti_connector-net
+    
+networks:
+   opencti_connector-net:
+     name: opencti-docker_opencti-net
+     external: true

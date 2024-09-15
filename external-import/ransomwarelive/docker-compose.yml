@@ -8,9 +8,9 @@ services:
       - CONNECTOR_NAME=Ransomware Connector
       - CONNECTOR_SCOPE=identity,attack-pattern,course-of-action,intrusion-set,malware,tool,report
       # Connector's generic execution parameters:
-      - OPENCTI_URL=http://opencti:8080
-      - OPENCTI_TOKEN=Changeme #generate user token
-      - CONNECTOR_ID=Changeme #Valid UUIDv4 tokem
+      - OPENCTI_URL=${OPENCTI_BASE_URL}
+      - OPENCTI_TOKEN=${CONNECTOR_RANSOMWARELIVE_TOKEN} #generate user token
+      - CONNECTOR_ID=${CONNECTOR_RANSOMWARELIVE_ID} #Valid UUIDv4 tokem
       - CONNECTOR_CONFIDENCE_LEVEL=100 # From 0 (Unknown) to 100 (Fully trusted).
       - CONNECTOR_LOG_LEVEL=info # Log level: debug, info, warn, error
       - CONNECTOR_UPDATE_EXISTING_DATA=false
@@ -20,7 +20,10 @@ services:
       # Connector's custom execution parameters:
       
     restart: always
+    networks:
+      - opencti_connector-net
+    
 networks:
-  default:
-    name: open_cti_docker_default
-    external: true
+   opencti_connector-net:
+     name: opencti-docker_opencti-net
+     external: true

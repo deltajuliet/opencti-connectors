@@ -3,9 +3,9 @@ services :
   connector-phishunt:
     image: opencti/connector-phishunt:6.2.18
     environment:
-      - OPENCTI_URL=http://opencti:8080
-      - OPENCTI_TOKEN=ChangeMe(UUIDv4 token)
-      - CONNECTOR_ID=ChangeMe(UUIDv4 token)
+      - OPENCTI_URL=${OPENCTI_BASE_URL}
+      - OPENCTI_TOKEN=${CONNECTOR_PHISHUNT_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_PHISHUNT_ID}
       - CONNECTOR_NAME=Phishunt
       - CONNECTOR_SCOPE=phishunt
       - CONNECTOR_CONFIDENCE_LEVEL=40 # From 0 (Unknown) to 100 (Fully trusted)
@@ -14,3 +14,10 @@ services :
       - PHISHUNT_CREATE_INDICATORS=true
       - PHISHUNT_INTERVAL=3 # In days, must be strictly greater than 1
     restart: always
+    networks:
+      - opencti_connector-net
+    
+networks:
+   opencti_connector-net:
+     name: opencti-docker_opencti-net
+     external: true
